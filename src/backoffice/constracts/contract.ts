@@ -1,4 +1,4 @@
 export interface Contract {
-  errors: any[];
+  errors: string[];
   validate(model: any): boolean;
 }
