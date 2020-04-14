@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { Contract } from 'src/backoffice/constracts/contract';
-import { Result } from 'src/backoffice/models/result.model';
+import { GenericResult } from 'src/shared/result.model';
 
 @Injectable()
 export class ValidatorInterceptor implements NestInterceptor {
@@ -22,7 +22,12 @@ export class ValidatorInterceptor implements NestInterceptor {
 
     if (!valid) {
       throw new HttpException(
-        new Result('Ops, algo saiu errado', false, null, this.contract.errors),
+        new GenericResult(
+          'Ops, algo saiu errado',
+          false,
+          null,
+          this.contract.errors,
+        ),
         HttpStatus.BAD_REQUEST,
       );
     }

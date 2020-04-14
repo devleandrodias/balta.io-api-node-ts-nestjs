@@ -1,4 +1,4 @@
-export class Result {
+export class GenericResult {
   constructor(
     public message: string,
     public success: boolean,
