@@ -6,7 +6,7 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
-import { Contract } from 'src/backoffice/constracts/contract';
+import { Contract } from 'src/shared/contract';
 import { GenericResult } from 'src/shared/result.model';
 
 @Injectable()
