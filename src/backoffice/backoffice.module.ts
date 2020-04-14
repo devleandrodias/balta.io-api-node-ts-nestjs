@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common'; // Core do NestJS
-import { CustomerController } from './controller/customer.controller';
+import { CustomerController } from './controllers/customer.controller';
 
 @Module({
   controllers: [CustomerController],
