@@ -4,6 +4,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Customer } from '../models/customer.model';
 import { CreateAddressDto } from '../dtos/createAddress.dto';
 import { PetDto } from '../dtos/createPet.dto';
+import { QueryDto } from 'src/shared/query.dto';
 
 @Injectable()
 export class CustomerService {
@@ -83,5 +84,22 @@ export class CustomerService {
       .find({}, 'name email document')
       .sort('name')
       .exec(); // -name, trazer todos campos menos name
+  }
+
+  async getByDocument(document: string): Promise<Customer> {
+    return await this.model
+      .find({ document })
+      .populate('user', 'username active')
+      .exec();
+  }
+
+  async query(model: QueryDto): Promise<Customer[]> {
+    return await this.model
+      .find(model.query, model.fields, {
+        skip: model.skip,
+        limit: model.take,
+      })
+      .sort(model.sort)
+      .exec();
   }
 }

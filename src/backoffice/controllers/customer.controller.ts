@@ -22,6 +22,7 @@ import { CreateAddressDto } from '../dtos/createAddress.dto';
 import { CreatAddressContract } from '../constracts/customer/createAddress.contract';
 import { CreatePetContract } from '../constracts/pets/createPet.contract';
 import { PetDto } from '../dtos/createPet.dto';
+import { QueryDto } from 'src/shared/query.dto';
 
 @Controller('v1/customers')
 export class CustomerController {
@@ -179,6 +180,40 @@ export class CustomerController {
         null,
         true,
         await this.customerService.getAll(),
+        null,
+      );
+    } catch (error) {
+      throw new HttpException(
+        new GenericResult('Não foi realizar sua consulta', false, null, error),
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+  }
+
+  @Get(':document')
+  async getByDocument(@Param('document') document: string) {
+    try {
+      return new GenericResult(
+        null,
+        true,
+        await this.customerService.getByDocument(document),
+        null,
+      );
+    } catch (error) {
+      throw new HttpException(
+        new GenericResult('Não foi realizar sua consulta', false, null, error),
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+  }
+
+  @Post('query')
+  async query(@Body() model: QueryDto) {
+    try {
+      return new GenericResult(
+        null,
+        true,
+        await this.customerService.query(model),
         null,
       );
     } catch (error) {
