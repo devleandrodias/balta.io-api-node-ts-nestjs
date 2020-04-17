@@ -63,4 +63,18 @@ export class CustomerService {
       options,
     );
   }
+
+  async updatePet(document: string, id: string, data: PetDto): Promise<PetDto> {
+    return await this.model.findOneAndUpdate(
+      {
+        document,
+        'pets._id': id,
+      },
+      {
+        $set: {
+          'pets.$': data, // Significa que a gente vai atualizar o que foi encontrado em 'pets._id'
+        },
+      },
+    );
+  }
 }

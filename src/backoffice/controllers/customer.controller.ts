@@ -144,6 +144,34 @@ export class CustomerController {
     }
   }
 
+  @Put(':document/pets/:id')
+  @UseInterceptors(new ValidatorInterceptor(new CreatePetContract()))
+  async updatePet(
+    @Param('document') document: string,
+    @Param('id') id: string,
+    @Body() model: PetDto,
+  ) {
+    try {
+      await this.customerService.updatePet(document, id, model);
+      return new GenericResult(
+        'Pet atualizado com sucesso!',
+        true,
+        model,
+        null,
+      );
+    } catch (error) {
+      throw new HttpException(
+        new GenericResult(
+          'Não foi possível atualizar seu pet',
+          false,
+          null,
+          error,
+        ),
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+  }
+
   @Put(':document')
   put(@Param('document') document: string, @Body() body: CreateCustomerDto) {
     return new GenericResult('Cliente atualizado com sucesso!', true, {}, null);
