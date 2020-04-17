@@ -3,6 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Customer } from '../models/customer.model';
 import { CreateAddressDto } from '../dtos/createAddress.dto';
+import { PetDto } from '../dtos/createPet.dto';
 
 @Injectable()
 export class CustomerService {
@@ -42,6 +43,21 @@ export class CustomerService {
       {
         $set: {
           shippingAddress: data,
+        },
+      },
+      options,
+    );
+  }
+
+  async createPet(document: string, data: PetDto): Promise<PetDto> {
+    // new: true, esse registro eh um novo registro, atribui um Id pra ele
+    const options = { upsert: true, new: true };
+
+    return await this.model.findOneAndUpdate(
+      { document },
+      {
+        $push: {
+          pets: data,
         },
       },
       options,

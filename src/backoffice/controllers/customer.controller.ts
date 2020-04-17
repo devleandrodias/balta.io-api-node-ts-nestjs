@@ -20,6 +20,8 @@ import { CustomerService } from '../services/customer.service';
 import { Customer } from '../models/customer.model';
 import { CreateAddressDto } from '../dtos/createAddress.dto';
 import { CreatAddressContract } from '../constracts/customer/createAddress.contract';
+import { CreatePetContract } from '../constracts/pets/createPet.contract';
+import { PetDto } from '../dtos/createPet.dto';
 
 @Controller('v1/customers')
 export class CustomerController {
@@ -27,16 +29,6 @@ export class CustomerController {
     private readonly accountService: AccountService,
     private readonly customerService: CustomerService,
   ) {}
-
-  @Get()
-  get() {
-    return new GenericResult(null, true, [], null);
-  }
-
-  @Get(':document')
-  getById(@Param('document') document: string) {
-    return new GenericResult(null, true, {}, null);
-  }
 
   @Post()
   @UseInterceptors(new ValidatorInterceptor(new CreateCustomerContract()))
@@ -51,7 +43,7 @@ export class CustomerController {
           model.name,
           model.document,
           model.email,
-          null,
+          [],
           null,
           null,
           null,
@@ -119,6 +111,30 @@ export class CustomerController {
       throw new HttpException(
         new GenericResult(
           'Não foi possível adicionar seu endereço de entrega',
+          false,
+          null,
+          error,
+        ),
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+  }
+
+  @Post(':document/pets')
+  @UseInterceptors(new ValidatorInterceptor(new CreatePetContract()))
+  async createPet(@Param('document') document: string, @Body() model: PetDto) {
+    try {
+      await this.customerService.createPet(document, model);
+      return new GenericResult(
+        'Novo pet cadastrado com sucesso',
+        true,
+        model,
+        null,
+      );
+    } catch (error) {
+      throw new HttpException(
+        new GenericResult(
+          'Não foi possível adicionar seu pet',
           false,
           null,
           error,
