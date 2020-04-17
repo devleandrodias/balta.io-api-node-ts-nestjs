@@ -10,7 +10,7 @@ import {
   HttpException,
   HttpStatus,
 } from '@nestjs/common';
-import { GenericResult } from '../../shared/result.model';
+import { GenericResult } from '../../../shared/result.model';
 import { ValidatorInterceptor } from 'src/interceptors/validator.interceptor';
 import { CreateCustomerContract } from '../constracts/customer/createCustomer.contract';
 import { CreateCustomerDto } from '../dtos/createCustomer.dto';

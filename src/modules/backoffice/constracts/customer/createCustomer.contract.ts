@@ -1,4 +1,4 @@
-import { Contract } from '../../../shared/contract';
+import { Contract } from '../../../../shared/contract';
 import { Flunt } from 'src/utils/flunt';
 import { Injectable } from '@nestjs/common';
 import { CreateCustomerDto } from '../../dtos/createCustomer.dto';
