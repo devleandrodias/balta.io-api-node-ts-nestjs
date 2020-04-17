@@ -5,6 +5,8 @@ import { Customer } from '../models/customer.model';
 import { CreateAddressDto } from '../dtos/createAddress.dto';
 import { PetDto } from '../dtos/createPet.dto';
 import { QueryDto } from 'src/shared/query.dto';
+import { CreditCard } from '../models/creditCard.model';
+import { CreditCardDto } from '../dtos/CreditCardDto';
 
 @Injectable()
 export class CustomerService {
@@ -101,5 +103,22 @@ export class CustomerService {
       })
       .sort(model.sort)
       .exec();
+  }
+
+  async saveOrUpdateCreditCard(
+    document: string,
+    data: CreditCardDto,
+  ): Promise<CreditCard> {
+    const options = { upsert: true };
+
+    return await this.model.findOneAndUpdate(
+      { document },
+      {
+        $set: {
+          card: data,
+        },
+      },
+      options,
+    );
   }
 }

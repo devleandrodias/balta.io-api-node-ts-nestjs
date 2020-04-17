@@ -23,6 +23,7 @@ import { CreatAddressContract } from '../constracts/customer/createAddress.contr
 import { CreatePetContract } from '../constracts/pets/createPet.contract';
 import { PetDto } from '../dtos/createPet.dto';
 import { QueryDto } from 'src/shared/query.dto';
+import { CreditCardDto } from '../dtos/CreditCardDto';
 
 @Controller('v1/customers')
 export class CustomerController {
@@ -214,6 +215,26 @@ export class CustomerController {
         null,
         true,
         await this.customerService.query(model),
+        null,
+      );
+    } catch (error) {
+      throw new HttpException(
+        new GenericResult('Não foi realizar sua consulta', false, null, error),
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+  }
+
+  @Post(':document/credit-cards')
+  async createBilling(
+    @Param('document') document: string,
+    @Body() model: CreditCardDto,
+  ) {
+    try {
+      return new GenericResult(
+        null,
+        true,
+        await this.customerService.saveOrUpdateCreditCard(document, model),
         null,
       );
     } catch (error) {
