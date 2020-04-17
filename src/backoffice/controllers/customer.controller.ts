@@ -172,13 +172,20 @@ export class CustomerController {
     }
   }
 
-  @Put(':document')
-  put(@Param('document') document: string, @Body() body: CreateCustomerDto) {
-    return new GenericResult('Cliente atualizado com sucesso!', true, {}, null);
-  }
-
-  @Delete(':document')
-  delete(@Param('document') document: string) {
-    return new GenericResult(`Cliente removido com sucesso!`, true, null, null);
+  @Get()
+  async getAll() {
+    try {
+      return new GenericResult(
+        null,
+        true,
+        await this.customerService.getAll(),
+        null,
+      );
+    } catch (error) {
+      throw new HttpException(
+        new GenericResult('Não foi realizar sua consulta', false, null, error),
+        HttpStatus.BAD_REQUEST,
+      );
+    }
   }
 }

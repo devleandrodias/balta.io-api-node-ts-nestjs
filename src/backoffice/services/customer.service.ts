@@ -77,4 +77,11 @@ export class CustomerService {
       },
     );
   }
+
+  async getAll(): Promise<Customer[]> {
+    return await this.model
+      .find({}, 'name email document')
+      .sort('name')
+      .exec(); // -name, trazer todos campos menos name
+  }
 }
