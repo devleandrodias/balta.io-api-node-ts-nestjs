@@ -10,29 +10,10 @@ import { ProductService } from './services/product.service';
 import { OrderItemService } from './services/orderItem.service';
 import { OrderController } from './controllers/order.controler';
 import { ProductController } from './controllers/product.controller';
-import { AuthService } from 'src/shared/services/authService';
-import { JwtStrategy } from 'src/shared/strategies/jwtStrategy';
 
 @Module({
-  imports: [
-    PassportModule.register({
-      defaultStrategy: 'jwt',
-    }),
-    JwtModule.register({
-      secretOrPrivateKey: 'tokenMuitoLouco1234312Desemcriptogrfiar',
-      signOptions: {
-        expiresIn: 3600,
-      },
-    }),
-    TypeOrmModule.forFeature([Product, Order, OrderItem]),
-  ],
-  providers: [
-    ProductService,
-    OrderService,
-    OrderItemService,
-    AuthService,
-    JwtStrategy,
-  ],
+  imports: [TypeOrmModule.forFeature([Product, Order, OrderItem])],
+  providers: [ProductService, OrderService, OrderItemService],
   controllers: [ProductController, OrderController],
 })
 export class StoreModule {}
