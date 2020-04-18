@@ -17,5 +17,11 @@ export class OrderItem {
     () => Product,
     pro => pro,
   )
-  product: number;
+  product: Product;
+
+  @Column()
+  price: number;
+
+  @Column()
+  quantity: number;
 }

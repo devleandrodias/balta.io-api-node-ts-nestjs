@@ -3,6 +3,18 @@ import { OrderItem } from './orderItem.entity';
 
 @Entity()
 export class Order {
+  constructor(
+    customer: string,
+    date: Date,
+    number: string,
+    items: OrderItem[],
+  ) {
+    this.customer = customer;
+    this.date = date;
+    this.items = items;
+    this.number = number;
+  }
+
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -20,10 +32,4 @@ export class Order {
     ordIte => ordIte.order,
   )
   items: OrderItem[];
-
-  @Column()
-  price: number;
-
-  @Column()
-  quantity: number;
 }
