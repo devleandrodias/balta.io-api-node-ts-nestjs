@@ -8,6 +8,6 @@ export class Product {
   @Column({ length: 80, type: 'varchar' })
   title: string;
 
-  @Column({ length: 4000, type: 'text' })
-  desccription: string;
+  @Column({ type: 'text' })
+  description: string;
 }
