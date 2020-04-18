@@ -7,6 +7,7 @@ import { CustomerSchema } from './schemas/customer.schema';
 import { AccountService } from './services/account.service';
 import { CustomerService } from './services/customer.service';
 import { CustomerController } from './controllers/customer.controller';
+import { AccountController } from './controllers/account.controller';
 import { AuthService } from 'src/shared/services/authService';
 import { JwtStrategy } from 'src/shared/strategies/jwtStrategy';
 
@@ -32,7 +33,7 @@ import { JwtStrategy } from 'src/shared/strategies/jwtStrategy';
       },
     ]),
   ],
-  controllers: [CustomerController],
+  controllers: [CustomerController, AccountController],
   providers: [AccountService, CustomerService, AuthService, JwtStrategy],
 })
 export class BackofficeModule {}
