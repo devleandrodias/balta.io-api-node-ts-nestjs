@@ -4,6 +4,8 @@ import {
   Body,
   HttpException,
   HttpStatus,
+  UseGuards,
+  Req,
 } from '@nestjs/common';
 import { Guid } from 'guid-typescript';
 import { AuthService } from 'src/shared/services/authService';
@@ -11,6 +13,8 @@ import { AuthenticationDto } from '../dtos/authentication.dto';
 import { AccountService } from '../services/account.service';
 import { GenericResult } from 'src/shared/result.model';
 import { ResetPasswordDto } from '../dtos/resetPassword.dto';
+import { JwtAuthGuard } from 'src/shared/guards/authGuard';
+import { ChangePasswordDto } from '../dtos/changePassword.dto';
 
 @Controller('v1/accounts')
 export class AccountController {
@@ -71,6 +75,38 @@ export class AccountController {
       throw new HttpException(
         new GenericResult(
           'Não foi possível no momento restaurar sua senha',
+          false,
+          null,
+          error,
+        ),
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+  }
+
+  @Post('change-password')
+  @UseGuards(JwtAuthGuard)
+  async changePassword(
+    @Req() req,
+    @Body() model: ChangePasswordDto,
+  ): Promise<any> {
+    try {
+      // TODO: Encriptar a senha
+
+      await this.accountService.update(req.user.document, {
+        password: model.newPassword,
+      });
+
+      return new GenericResult(
+        'Sua senha foi alterada com sucesso!',
+        true,
+        null,
+        null,
+      );
+    } catch (error) {
+      return new HttpException(
+        new GenericResult(
+          'Não foi possível alterar sua senha',
           false,
           null,
           error,
