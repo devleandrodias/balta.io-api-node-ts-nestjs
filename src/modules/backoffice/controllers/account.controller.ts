@@ -53,6 +53,19 @@ export class AccountController {
     return new GenericResult(null, true, token, null);
   }
 
+  @Post('refresh-token')
+  @UseGuards(JwtAuthGuard)
+  async refreshToken(@Req() req: any): Promise<any> {
+    const token = this.authService.createToken(
+      req.user.document,
+      req.user.email,
+      req.user.image,
+      req.user.roles,
+    );
+
+    return new GenericResult(null, true, token, null);
+  }
+
   @Post('reset-password')
   async resetPassword(@Body() model: ResetPasswordDto): Promise<any> {
     try {
@@ -87,7 +100,7 @@ export class AccountController {
   @Post('change-password')
   @UseGuards(JwtAuthGuard)
   async changePassword(
-    @Req() req,
+    @Req() req: any,
     @Body() model: ChangePasswordDto,
   ): Promise<any> {
     try {
