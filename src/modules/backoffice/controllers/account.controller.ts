@@ -1,6 +1,6 @@
 import { Controller, Get, UseGuards, Post } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from 'src/shared/services/authService';
+import { JwtAuthGuard } from 'src/shared/guards/authGuard';
 
 @Controller('v1/accounts')
 export class AccountController {
@@ -12,8 +12,8 @@ export class AccountController {
   }
 
   @Get()
-  @UseGuards(AuthGuard())
+  @UseGuards(JwtAuthGuard)
   async findAll() {
-    return [];
+    return 'Você tem permissão e token válido para essa requisição';
   }
 }

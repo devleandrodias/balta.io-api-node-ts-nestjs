@@ -17,7 +17,7 @@ import { JwtStrategy } from 'src/shared/strategies/jwtStrategy';
       defaultStrategy: 'jwt',
     }),
     JwtModule.register({
-      secretOrPrivateKey: 'tokenMuitoLouco1234312Desemcriptogrfiar',
+      secretOrKeyProvider: () => 'tokenMuitoLouco1234312Desemcriptogrfiar',
       signOptions: {
         expiresIn: 3600,
       },
