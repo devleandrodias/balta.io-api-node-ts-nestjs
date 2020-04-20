@@ -246,4 +246,24 @@ export class CustomerController {
       );
     }
   }
+
+  @Get('search/:zipcode')
+  async search(@Param('zipcode') zipcode: string) {
+    try {
+      const response = await this.customerService
+        .getAddressByZipCode(zipcode)
+        .toPromise();
+      return new GenericResult(null, true, response.data, null);
+    } catch (error) {
+      throw new HttpException(
+        new GenericResult(
+          'Não foi possível localizar seu endereço',
+          false,
+          null,
+          error,
+        ),
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+  }
 }

@@ -1,5 +1,5 @@
 import { Model } from 'mongoose';
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpService } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Customer } from '../models/customer.model';
 import { CreateAddressDto } from '../dtos/createAddress.dto';
@@ -12,6 +12,7 @@ import { CreditCardDto } from '../dtos/CreditCardDto';
 export class CustomerService {
   constructor(
     @InjectModel('Customer') private readonly model: Model<Customer>,
+    private readonly httpService: HttpService,
   ) {}
 
   async create(data: Customer): Promise<Customer> {
@@ -120,5 +121,9 @@ export class CustomerService {
       },
       options,
     );
+  }
+
+  getAddressByZipCode(zipcode: string) {
+    return this.httpService.get(`https://viacep.com.br/ws/${zipcode}/json`);
   }
 }
