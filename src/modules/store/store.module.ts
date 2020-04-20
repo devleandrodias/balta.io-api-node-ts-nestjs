@@ -1,7 +1,5 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { JwtModule } from '@nestjs/jwt';
-import { PassportModule } from '@nestjs/passport';
 import { Order } from './entities/order.entity';
 import { Product } from './entities/product.entity';
 import { OrderItem } from './entities/orderItem.entity';
