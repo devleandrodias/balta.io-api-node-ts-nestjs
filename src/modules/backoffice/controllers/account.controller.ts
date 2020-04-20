@@ -1,21 +1,16 @@
 import {
   Controller,
-  Get,
-  UseGuards,
   Post,
-  Req,
-  UseInterceptors,
   Body,
   HttpException,
   HttpStatus,
 } from '@nestjs/common';
+import { Guid } from 'guid-typescript';
 import { AuthService } from 'src/shared/services/authService';
-import { JwtAuthGuard } from 'src/shared/guards/authGuard';
-import { RoleInterceptor } from 'src/shared/interceptors/roles.interceptor';
 import { AuthenticationDto } from '../dtos/authentication.dto';
 import { AccountService } from '../services/account.service';
 import { GenericResult } from 'src/shared/result.model';
-import { GenericMessage } from 'src/shared/genericMessages.enum';
+import { ResetPasswordDto } from '../dtos/resetPassword.dto';
 
 @Controller('v1/accounts')
 export class AccountController {
@@ -52,5 +47,36 @@ export class AccountController {
     );
 
     return new GenericResult(null, true, token, null);
+  }
+
+  @Post('reset-password')
+  async resetPassword(@Body() model: ResetPasswordDto): Promise<any> {
+    try {
+      // TODO: Enviar email com nova senha
+
+      const password = Guid.create()
+        .toString()
+        .substring(0, 8)
+        .replace('-', '');
+
+      await this.accountService.update(model.document, { password });
+
+      return new GenericResult(
+        'Uma nova senha foi enviada para seu email',
+        true,
+        null,
+        null,
+      );
+    } catch (error) {
+      throw new HttpException(
+        new GenericResult(
+          'Não foi possível no momento restaurar sua senha',
+          false,
+          null,
+          error,
+        ),
+        HttpStatus.BAD_REQUEST,
+      );
+    }
   }
 }

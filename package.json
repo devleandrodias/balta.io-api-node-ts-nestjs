@@ -28,6 +28,7 @@
     "@nestjs/passport": "^7.0.0",
     "@nestjs/platform-express": "^7.0.0",
     "@types/passport-jwt": "^3.0.3",
+    "guid-typescript": "^1.0.9",
     "mongoose": "^5.9.9",
     "passport": "^0.4.1",
     "passport-http-bearer": "^1.0.1",
