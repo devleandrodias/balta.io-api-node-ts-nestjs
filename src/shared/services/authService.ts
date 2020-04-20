@@ -11,7 +11,14 @@ export class AuthService {
   ) {}
 
   async createToken() {
-    const user: JwtPayload = { username: 'teste@gmail.com' };
+    const user: JwtPayload = {
+      document: '12345678911',
+      email: 'teste@teste.com',
+      image:
+        'https://microhealth.com/assets/images/illustrations/personal-user-illustration-@2x.png',
+      roles: ['admin'],
+    };
+
     const accessToken = this.jwtService.sign(user);
 
     return {
@@ -21,6 +28,7 @@ export class AuthService {
   }
 
   async validateUser(payload: JwtPayload): Promise<any> {
-    return await this.accountService.findOneByUsername(payload.username);
+    return payload;
+    // return await this.accountService.findOneByUsername(payload.document);
   }
 }
