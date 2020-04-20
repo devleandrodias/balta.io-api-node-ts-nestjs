@@ -9,6 +9,7 @@ import {
   UseInterceptors,
   HttpException,
   HttpStatus,
+  CacheInterceptor,
 } from '@nestjs/common';
 import { GenericResult } from '../../../shared/result.model';
 import { ValidatorInterceptor } from 'src/interceptors/validator.interceptor';
@@ -175,6 +176,7 @@ export class CustomerController {
   }
 
   @Get()
+  @UseInterceptors(CacheInterceptor)
   async getAll() {
     try {
       return new GenericResult(
