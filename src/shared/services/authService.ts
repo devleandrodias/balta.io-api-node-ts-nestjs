@@ -10,21 +10,20 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async createToken() {
+  async createToken(
+    document: string,
+    email: string,
+    image: string,
+    roles: string[],
+  ) {
     const user: JwtPayload = {
-      document: '12345678911',
-      email: 'teste@teste.com',
-      image:
-        'https://microhealth.com/assets/images/illustrations/personal-user-illustration-@2x.png',
-      roles: ['admin'],
+      document: document,
+      email: email,
+      image: image,
+      roles: roles,
     };
 
-    const accessToken = this.jwtService.sign(user);
-
-    return {
-      expiresIn: 3600,
-      accessToken,
-    };
+    return this.jwtService.sign(user);
   }
 
   async validateUser(payload: JwtPayload): Promise<any> {
