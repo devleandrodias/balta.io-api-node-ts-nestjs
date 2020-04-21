@@ -6,6 +6,7 @@ import { RoomRepository } from './repositories/room.repository';
 import { CommandHandlers } from './commands/handlers';
 import { EventHandlers } from './events/handlers';
 
+// Comando representa algo que vai necessáriamente refletir em uma ação
 @Module({
   imports: [CqrsModule],
   controllers: [AgendaController],
