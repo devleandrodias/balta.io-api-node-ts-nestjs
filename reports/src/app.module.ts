@@ -5,8 +5,6 @@ import { ReportsModule } from './reports/reports.module';
 @Module({
   imports: [
     GraphQLModule.forRoot({
-      // debug: false,
-      // playground: false,
       installSubscriptionHandlers: true,
       autoSchemaFile: 'schema.gql',
     }),
