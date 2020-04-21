@@ -1,6 +1,6 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { BookRoomCommand } from '../commands/bookRoom.command';
-import { RoomRepository } from '../repositories/room.repository';
+import { BookRoomCommand } from '../bookRoom.command';
+import { RoomRepository } from '../../repositories/room.repository';
 
 @CommandHandler(BookRoomCommand)
 export class BookRoomHandler implements ICommandHandler<BookRoomCommand> {
