@@ -6,7 +6,7 @@ export class Room extends AggregateRoot {
     super();
   }
 
-  book(customerId: string) {
+  book(customerId: string, date: Date) {
     // Regras de negócio
     // Ele va disparar o evento toda vez que passar por aqui
     this.apply(new RoomBookedEvent(customerId, this.id));

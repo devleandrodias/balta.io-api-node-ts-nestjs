@@ -6,11 +6,8 @@ import { BookRoomCommand } from '../commands/bookRoom.command';
 export class RoomBookService {
   constructor(private readonly commandBus: CommandBus) {} // Barramento de Comandos
 
-  async Book(customerId: string, roomId: string) {
-    console.log('RoomBookService:book - Executando o serviço...');
-
-    return await this.commandBus.execute(
-      new BookRoomCommand(customerId, roomId),
-    );
+  // Vários comandos sendo executados em sequência
+  async Book(command: BookRoomCommand) {
+    return await this.commandBus.execute(command);
   }
 }
